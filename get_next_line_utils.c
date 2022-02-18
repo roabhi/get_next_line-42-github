@@ -6,7 +6,7 @@
 /*   By: rabril-h <rabril-h@student.42barc...>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:16:05 by rabril-h          #+#    #+#             */
-/*   Updated: 2022/02/17 21:56:36 by rabril-h         ###   ########.bcn      */
+/*   Updated: 2022/02/18 22:03:27 by rabril-h         ###   ########.bcn      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ char	*ft_strchr(const char *s, int c)
 	int		i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i] != (unsigned char)c)
 	{
 		if (s[i] == '\0')
@@ -111,6 +113,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i])
 		i++;
 	return (i);	
@@ -140,10 +144,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		c;
 	int		i;
 
-	if (!s1){
-		s1 = malloc(sizeof(char));
-		s1[0] = '\0';
-	}
 	c = 0;
 	i = 0;
 	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
@@ -161,7 +161,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	str[c + i] = '\0';
 	//printf("s1 es %s, s2 es %s \n\n", s1, s2);
-	//free(s1);
+	free(s1);
 	//free(s2);
+	//write(1, "join",19);
 	return (str);
 }
