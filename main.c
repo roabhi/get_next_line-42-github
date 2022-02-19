@@ -6,7 +6,7 @@
 /*   By: rabril-h <rabril-h@student.42barc...>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:33:34 by rabril-h          #+#    #+#             */
-/*   Updated: 2022/02/18 22:09:23 by rabril-h         ###   ########.bcn      */
+/*   Updated: 2022/02/19 17:09:00 by rabril-h         ###   ########.bcn      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ int	main()
 	char *line;
 	int	f;	
 
-	f = open("tests/test.txt", O_RDONLY);
-	//f = open("tests/test2.txt", O_RDONLY);
+	//f = open("tests/test.txt", O_RDONLY);
+	f = open("tests/test2.txt", O_RDONLY);
 	//f = open("tests/test3.txt", O_RDONLY);
 	//f = open("tests/test4.txt", O_RDONLY);
 	//f = open("tests/empty.txt", O_RDONLY);
 	//f = open("tests/1char.txt", O_RDONLY);
+	//f = open("tests/nl.txt", O_RDONLY);
 	line = get_next_line(f);
 	//line = get_next_line("soy un string")
 	//printf("line [%02d]: %s", f, line);

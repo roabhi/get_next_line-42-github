@@ -6,35 +6,28 @@
 /*   By: rabril-h <rabril-h@student.42barc...>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:16:05 by rabril-h          #+#    #+#             */
-/*   Updated: 2022/02/18 22:03:27 by rabril-h         ###   ########.bcn      */
+/*   Updated: 2022/02/19 19:16:06 by rabril-h         ###   ########.bcn      */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_memset(void *b, int c, size_t len)
-{
-	char	*x;
-	size_t	j;
-
-	x = (char *)b;
-	j = 0;
-	while (j < len)
-	{
-		x[j] = c;
-		j++;
-	}
-	return (b);
-}
-
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
+	char	*x;
+	size_t	j;
 
 	ptr = (void *)malloc(count * size);
+	j = 0;
+	x = (char *)ptr;
 	if (!ptr)
 		return (NULL);
-	ft_memset(ptr, 0, count * size);
+	while (j < (count * size))
+	{
+		x[j] = 0;
+		j++;
+	}
 	return ((void *)ptr);
 }
 
@@ -77,20 +70,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-
-char	*ft_strrchr(const char *s, int c)
-{
-	int	i;
-
-	i = ft_strlen(s);
-	while (i >= 0)
-	{
-		if (s[i] == (unsigned char)c)
-			return ((char *)s + i);
-		i--;
-	}
-	return (NULL);
-}
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -160,9 +139,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	str[c + i] = '\0';
-	//printf("s1 es %s, s2 es %s \n\n", s1, s2);
 	free(s1);
-	//free(s2);
-	//write(1, "join",19);
 	return (str);
 }

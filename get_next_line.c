@@ -6,7 +6,7 @@
 /*   By: rabril-h <rabril-h@student.42barc...>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:07:10 by rabril-h          #+#    #+#             */
-/*   Updated: 2022/02/18 22:07:19 by rabril-h         ###   ########.bcn      */
+/*   Updated: 2022/02/19 19:26:03 by rabril-h         ###   ########.bcn      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,30 @@ size_t	get_line_cnt(const char *storage)
 	size_t i;
 
 	i = 0;
-	while (storage[i] != '\n' && storage[i])
+	while (storage[i] && storage[i] != '\n')
 		i++;
 	return (i + 1);
 }
 
-char	*clean_storage(char *storage)
+char	*clean_storage(char *storage, char *l)
 {
 	char *aux;
 
-	aux = storage;
-	storage = ft_substr(storage, (unsigned int)get_line_cnt(storage), (ft_strlen(storage) - get_line_cnt(storage)));
-	free(aux);
-	return (storage);
+	if (ft_strlen(storage) == 0 && (ft_strlen(l) == 0))
+	{
+		free(storage);
+		return (NULL);
+	}
+	else
+	{
+		aux = ft_substr(storage, (unsigned int)get_line_cnt(storage),
+				(ft_strlen(storage) - get_line_cnt(storage)));
+	
+		free(storage);
+		return (aux);
+	}
+	
 }
-
 
 char	*get_line_from_storage(char *storage)
 {
@@ -40,7 +49,6 @@ char	*get_line_from_storage(char *storage)
 	line = ft_substr(storage, 0, (int)get_line_cnt(storage));
 	return (line);
 }
-
 
 char	*get_next_line(int fd)
 {
@@ -73,6 +81,12 @@ char	*get_next_line(int fd)
 	if (rb == 0 && storage == NULL)
 		return (NULL);
 	line = get_line_from_storage(storage);
-	storage = clean_storage(storage);
-	return (line);
+	storage = clean_storage(storage, line);
+	if (ft_strlen(line) > 0)
+		return (line);
+	else
+	{
+		free (line);
+		return (NULL);
+	}
 }
