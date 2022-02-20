@@ -12,29 +12,19 @@
 
 #include "get_next_line.h"
 
-size_t	get_line_cnt(const char *storage)
-{
-	size_t i;
-
-	i = 0;
-	while (storage[i] && storage[i] != '\n')
-		i++;
-	return (i + 1);
-}
-
 char	*clean_storage(char *storage, char *l)
 {
 	char *aux;
 
-	if (ft_strlen(storage) == 0 && (ft_strlen(l) == 0))
+	if (rah_strlen_or_n(storage, '\0') == 0 && (rah_strlen_or_n(l, '\0') == 0))
 	{
 		free(storage);
 		return (NULL);
 	}
 	else
 	{
-		aux = ft_substr(storage, (unsigned int)get_line_cnt(storage),
-				(ft_strlen(storage) - get_line_cnt(storage)));
+		aux = ft_substr(storage, (unsigned int)rah_strlen_or_n(storage, '\n'),
+				(rah_strlen_or_n(storage, '\0') - rah_strlen_or_n(storage, '\n')));
 	
 		free(storage);
 		return (aux);
@@ -46,7 +36,7 @@ char	*get_line_from_storage(char *storage)
 {
 	char *line;
 	
-	line = ft_substr(storage, 0, (int)get_line_cnt(storage));
+	line = ft_substr(storage, 0, (int)rah_strlen_or_n(storage, '\n'));
 	return (line);
 }
 
@@ -82,7 +72,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = get_line_from_storage(storage);
 	storage = clean_storage(storage, line);
-	if (ft_strlen(line) > 0)
+	if (rah_strlen_or_n(line, '\0') > 0)
 		return (line);
 	else
 	{

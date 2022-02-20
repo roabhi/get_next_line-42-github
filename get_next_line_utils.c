@@ -12,6 +12,19 @@
 
 #include "get_next_line.h"
 
+size_t	rah_strlen_or_n(const char *s, char c)
+{
+	size_t i;
+
+	i = 0;
+	while (s[i] && s[i] != c)
+		i++;
+	if (c == '\n')
+		return (i + 1);
+	else
+		return (i);
+}
+
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
@@ -31,42 +44,49 @@ void	*ft_calloc(size_t count, size_t size)
 	return ((void *)ptr);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
+// size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+// {
+// 	size_t	i;
 
-	i = 0;
-	if (dstsize > 0)
-	{
-		while (i < (dstsize - 1) && src[i] != '\0')
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	i = 0;
-	while (src[i] != '\0')
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	if (dstsize > 0)
+// 	{
+// 		while (i < (dstsize - 1) && src[i] != '\0')
+// 		{
+// 			dst[i] = src[i];
+// 			i++;
+// 		}
+// 		dst[i] = '\0';
+// 	}
+// 	i = 0;
+// 	while (src[i] != '\0')
+// 		i++;
+// 	return (i);
+// }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	c;
+	size_t	i;
 	char	*str;
 
 	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s) || len == 0)
+	if (start >= rah_strlen_or_n(s, '\0') || len == 0)
 		return (ft_calloc(1, 1));
-	c = ft_strlen(s);
+	c = rah_strlen_or_n(s, '\0');
 	if (len > c)
 		len = c;
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, s + start, len + 1);
+	i = 0;
+	while (i < ((len + 1) - 1) && s[i] != '\0')
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
 	return (str);
 }
 
@@ -87,17 +107,17 @@ char	*ft_strchr(const char *s, int c)
 	return ((char *)s + i);
 }
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
+// size_t	ft_strlen(const char *s)
+// {
+// 	size_t	i;
 
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);	
-}
+// 	i = 0;
+// 	if (!s)
+// 		return (0);
+// 	while (s[i])
+// 		i++;
+// 	return (i);	
+// }
 
 char	*ft_strdup(const char *s1)
 {
@@ -105,7 +125,7 @@ char	*ft_strdup(const char *s1)
 	char	*str;
 
 	c = 0;
-	str = (char *)malloc(sizeof(char) * ft_strlen(s1) + 1);
+	str = (char *)malloc(sizeof(char) * rah_strlen_or_n(s1, '\0') + 1);
 	if (!str)
 		return (NULL);
 	while (s1[c] != '\0')
@@ -125,7 +145,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	c = 0;
 	i = 0;
-	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = (char *)malloc(rah_strlen_or_n(s1, '\0') + rah_strlen_or_n(s2, '\0') + 1);
 	if (!str)
 		return (NULL);
 	while (s1[c] != '\0')
