@@ -6,7 +6,7 @@
 /*   By: rabril-h <rabril-h@student.42barc...>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:16:05 by rabril-h          #+#    #+#             */
-/*   Updated: 2022/02/19 19:16:06 by rabril-h         ###   ########.bcn      */
+/*   Updated: 2022/02/21 19:07:30 by rabril-h         ###   ########.bcn      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,45 +31,34 @@ void	*ft_calloc(size_t count, size_t size)
 	return ((void *)ptr);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dstsize > 0)
-	{
-		while (i < (dstsize - 1) && src[i] != '\0')
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	i = 0;
-	while (src[i] != '\0')
-		i++;
-	return (i);
-}
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	c;
 	char	*str;
+	size_t	i;
 
 	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s) || len == 0)
+	if (start >= ft_strlenn(s, '\0') || len == 0)
 		return (ft_calloc(1, 1));
-	c = ft_strlen(s);
+	c = ft_strlenn(s, '\0');
 	if (len > c)
 		len = c;
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, s + start, len + 1);
+	i = 0;
+	if (len > 0)
+	{
+		while (i < len && s[start + i] != '\0')
+		{
+			str[i] = s[start + i];
+			i++;
+		}		
+	}
+	str[i] = '\0';
 	return (str);
 }
-
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -87,25 +76,13 @@ char	*ft_strchr(const char *s, int c)
 	return ((char *)s + i);
 }
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);	
-}
-
 char	*ft_strdup(const char *s1)
 {
 	int		c;
 	char	*str;
 
 	c = 0;
-	str = (char *)malloc(sizeof(char) * ft_strlen(s1) + 1);
+	str = (char *)malloc(sizeof(char) * ft_strlenn(s1, '\0') + 1);
 	if (!str)
 		return (NULL);
 	while (s1[c] != '\0')
@@ -125,7 +102,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	c = 0;
 	i = 0;
-	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = (char *)malloc(ft_strlenn(s1, '\0') + ft_strlenn(s2, '\0') + 1);
 	if (!str)
 		return (NULL);
 	while (s1[c] != '\0')
